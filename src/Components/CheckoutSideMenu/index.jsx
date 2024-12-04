@@ -18,11 +18,8 @@ export const CheckoutSideMenu = () => {
       const product = context.carProducts[productIndex];
       const updatedCarProducts = [...context.carProducts];
 
-      if (product.quantity > 1) {
-        updatedCarProducts[productIndex].quantity -= 1;
-      } else {
-        updatedCarProducts.splice(productIndex, 1);
-      }
+      if (product.quantity > 1) updatedCarProducts[productIndex].quantity -= 1;
+      else updatedCarProducts.splice(productIndex, 1);
 
       context.setCarProducts(updatedCarProducts);
       context.setCount(context.count - 1);
@@ -30,6 +27,8 @@ export const CheckoutSideMenu = () => {
   };
 
   const handleCheckout = () => {
+    if (context.carProducts.length === 0) return;
+
     const orderToAdd = {
       date: new Date(),
       products: context.carProducts,
@@ -42,6 +41,8 @@ export const CheckoutSideMenu = () => {
     // console.log(context.order);
     context.setCount(0);
     context.setCarProducts([]);
+    context.closeCheckoutSideMenu();
+    context.setSearchByTitle(null);
   };
 
   return (
@@ -59,36 +60,39 @@ export const CheckoutSideMenu = () => {
           />
         </div>
       </div>
-      <div className="bg-gray-50 px-6 overflow-y-scroll flex-1">
+      <div className="bg-gray-50 px-6 pt-4 overflow-y-scroll flex-1">
         {context.carProducts.map((product) => (
           <OrderCard
             key={product.id}
             id={product.id}
             title={product.title}
             imageUrl={product.image}
-            price={product.rating.count}
+            price={product.price.toFixed(2)}
             quantity={product.quantity}
             handleDelete={handleDelete}
           />
         ))}
       </div>
 
-      <div className="ml-7 mt-1 bg-purple-50 border-l-8 border-t-2 border-b-2 border-purple-200 h-9">
-        <p className="flex justify-between items-center mb-2">
-          <span className="font-sans pr-2 text-2xl">Total:</span>
-          <span className="font-medium pr-12 text-2xl">
-            ${totalPrice(context.carProducts)}
-          </span>
-        </p>
-      </div>
-
-      <Link
-        className="flex justify-center mx-7 my-2 font-medium bg-purple-50 border border-purple-300 rounded-lg py-1 cursor-pointer"
-        to="/my-order/last"
-        onClick={handleCheckout}
-      >
-        <button>Checkout</button>
-      </Link>
+      {context.carProducts.length > 0 && (
+        <>
+          <div className="ml-7 mt-1 bg-purple-50 border-l-8 border-t-2 border-b-2 border-purple-200 h-9">
+            <p className="flex justify-between items-center mb-2">
+              <span className="font-sans pr-2 text-2xl">Total:</span>
+              <span className="font-medium pr-12 text-2xl">
+                ${totalPrice(context.carProducts).toFixed(2)}
+              </span>
+            </p>
+          </div>
+          <Link
+            className="flex justify-center mx-7 my-2 font-medium bg-purple-50 border border-purple-300 rounded-lg py-1 cursor-pointer"
+            to="/my-order/last"
+            onClick={handleCheckout}
+          >
+            <button>Checkout</button>
+          </Link>
+        </>
+      )}
     </aside>
   );
 };

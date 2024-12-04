@@ -29,14 +29,14 @@ function MyOrder() {
       <div className="bg-gray-50 p-4 flex flex-col rounded-xl border-l-4 border-b-4 border-purple-300">
         {/* usando el id no reenderiza en el componente MyOrder */}
         {/* {context.order?.[id]?.products.map((product) => ( */}
-          {/* usando el index si reenderiza el componente en MyOrder */}
+        {/* usando el index si reenderiza el componente en MyOrder */}
         {context.order?.[index]?.products.map((product) => (
           <OrderCard
             key={product.id}
             id={product.id}
             title={product.title}
             imageUrl={product.image}
-            price={product.rating.count}
+            price={product.price.toFixed(2)}
             quantity={product.quantity}
           />
         ))}

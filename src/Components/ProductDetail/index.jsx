@@ -31,7 +31,7 @@ export const ProductDetail = () => {
       </figure>
       <p className="flex flex-col p-6 text-justify">
         <span className="font-medium text-2xl">
-          ${context.productInfo?.rating?.count}
+          ${context.productInfo?.price}
         </span>
         <span className="font-medium text-md pt-3">
           {context.productInfo?.title}

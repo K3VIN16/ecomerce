@@ -11,40 +11,20 @@ import { ShoppingCardProvider } from "../../Contexts";
 import { CheckoutSideMenu } from "../../Components/CheckoutSideMenu";
 
 const AppRourtes = () => {
-  // Aquí van las rutas de la app
+  // Aquí van las rutas de las diferentes paginas de la app
   let routes = useRoutes([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/my-account",
-      element: <MyAccount />,
-    },
-    {
-      path: "/my-order",
-      element: <MyOrder />,
-    },
-    {
-      path: "/my-orders",
-      element: <MyOrders />,
-    },
-    {
-      path: "/my-order/last",
-      element: <MyOrder />,
-    },
-    {
-      path: `/my-order/:id`,
-      element: <MyOrder />,
-    },
-    {
-      path: "/sign-in",
-      element: <SignIn />,
-    },
-    {
-      path: "*",
-      element: <NotFound />,
-    },
+    { path: "/", element: <Home /> },
+    { path: "/men's clothing", element: <Home /> },
+    { path: "/women's clothing", element: <Home /> },
+    { path: "/electronics", element: <Home /> },
+    { path: "/jewelery", element: <Home /> },
+    { path: "/my-account", element: <MyAccount /> },
+    { path: "/my-order", element: <MyOrder /> },
+    { path: "/my-orders", element: <MyOrders /> },
+    { path: "/my-order/last", element: <MyOrder /> },
+    { path: `/my-order/:id`, element: <MyOrder /> },
+    { path: "/sign-in", element: <SignIn /> },
+    { path: "*", element: <NotFound /> },
   ]);
 
   return routes;

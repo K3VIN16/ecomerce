@@ -1,16 +1,63 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
 export const ShoppingCardContext = createContext();
 
 export const ShoppingCardProvider = ({ children }) => {
   // Shopping Car - Contador de productos
   const [count, setCount] = useState(0);
+
   // Product Detail - mostrar información del producto
   const [productInfo, setProductInfo] = useState({});
-  // Shopping Car - Carrito de compras, almacena productos
+
+  // Shopping Car - Carrito de compras, almacena PRODUCTOS
   const [carProducts, setCarProducts] = useState([]);
-  // Shopping Car - Grupo de ordenes, almacena ordenes
+
+  // Shopping Car - Grupo de ordenes, almacena ORDENES
   const [order, setOrder] = useState([]);
+
+  // Home - Items de la API
+  const [items, setItems] = useState(null);
+
+  // Home - Filtrar items
+  const [filteredItems, setFilteredItems] = useState(null);
+
+  // Home - Buscar por título
+  const [searchByTitle, setSearchByTitle] = useState("");
+
+  // Home - Buscar por categoría
+  const [searchByCategory, setSearchByCategory] = useState("");
+
+  const filterItems = (items, searchByCategory, searchByTitle) => {
+    let result = items;
+
+    if (searchByCategory) {
+      result = result.filter(
+        (item) => item.category.toLowerCase() === searchByCategory.toLowerCase()
+      );
+    }
+
+    if (searchByTitle) {
+      result = result.filter((item) =>
+        item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+      );
+    }
+
+    return result;
+  };
+
+  useEffect(() => {
+    const filtered = filterItems(items, searchByCategory, searchByTitle);
+    setFilteredItems(filtered);
+  }, [items, searchByCategory, searchByTitle]);
+
+  // Consumo de la API
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      // fetch("https://api.escuelajs.co/api/v1/products")
+      .then((response) => response.json())
+      // .then((data) => console.log(data))
+      .then((data) => setItems(data));
+  }, []);
 
   // Product Detail - Abrir o cerrar detalle producto
   const [isProductDetail, setIsProductDetail] = useState(false);
@@ -73,6 +120,18 @@ export const ShoppingCardProvider = ({ children }) => {
 
         order,
         setOrder,
+
+        items,
+        setItems,
+
+        searchByTitle,
+        setSearchByTitle,
+
+        filteredItems,
+        setFilteredItems,
+
+        searchByCategory,
+        setSearchByCategory,
       }}
     >
       {children}

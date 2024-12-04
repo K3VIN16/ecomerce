@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Components/Layout";
-import OrdersCard from "../../Components/OrderCards";
+import OrdersCard from "../../Components/OrdersCard";
 import { ShoppingCardContext } from "../../Contexts";
 
 function MyOrders() {
@@ -14,8 +14,9 @@ function MyOrders() {
         <Link key={index} to={`/my-order/${index}`}>
           <OrdersCard
             key={order.id}
-            totalProducts={order.totalProducts}
             totalPrice={order.totalPrice}
+            totalProducts={order.totalProducts}
+            date={new Date().toLocaleDateString()}
           />
         </Link>
       ))}

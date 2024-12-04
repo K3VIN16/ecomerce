@@ -71,7 +71,7 @@ export const Card = (data) => {
 
   return (
     <div
-      className="bg-white cursor-pointer w-56 h-60"
+      className="bg-white cursor-pointer w-56 h-60 rounded-lg"
       onClick={() => showProduct(data.data)}
     >
       <figure className="relative mb-2 w-full h-4/5">
@@ -87,7 +87,9 @@ export const Card = (data) => {
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{data.data.title}</span>
-        <span className="text-sm font-medium">${data.data.rating.count}</span>
+        <span className="text-sm font-medium">
+          ${data.data.price.toFixed(2)}
+        </span>
       </p>
     </div>
   );
